@@ -56,6 +56,7 @@ def draw_trajectory(plot, xys: list[list[float]]) -> None:
 AREA_X = [-1.5, 1.5]
 AREA_Y = [-1.5, 1.5]
 POSE_LENGTH = 0.1
+TRAJECTORY_SIZE = 30
 
 # world view
 map_scatter = axes[0].scatter([], [], c='black', s=20)
@@ -87,12 +88,13 @@ class StreamlitViewer:
         st.sidebar.title(self._sidebar_title)
         self._movement_option = st.sidebar.selectbox('Select Movement', ('Circle', 'Rectangle'))
         self._landmark_number = st.sidebar.number_input(
-            '# Landmarks', min_value=3, max_value=30, value=10, step=1)
+            '# Landmarks', min_value=3, max_value=30, value=20, step=1)
 
     def display_main_content(self):
         st.write('Welcome to the Robot Localization Viewer!')
 
         global fig
+        global map_scatter
 
         self.plot_area = st.empty()
         self.st_plot = self.plot_area.pyplot(fig)
@@ -124,7 +126,6 @@ class StreamlitViewer:
 
     def animate(self) -> None:
         global fig
-        global map_scatter
         global observed_scatter
         global gt_x_line, gt_y_line
         global trajectory_gt, trajectory_predicted
@@ -135,6 +136,12 @@ class StreamlitViewer:
             self.agent.get_map()[:, :-1], observed)
 
         # trajectories
+        if len(self._traj_gt[0]) >= TRAJECTORY_SIZE:
+            self._traj_gt[0].pop(0)
+            self._traj_gt[1].pop(0)
+        if len(self._traj_predicted[0]) >= TRAJECTORY_SIZE:
+            self._traj_predicted[0].pop(0)
+            self._traj_predicted[1].pop(0)
         self._traj_gt[0].append(pose[0, -1])
         self._traj_gt[1].append(pose[1, -1])
         self._traj_predicted[0].append(solved_pose[0, -1])
