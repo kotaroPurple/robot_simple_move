@@ -45,6 +45,7 @@ def rectangular_data(good_data: bool) -> NDArray:
     n_turn = 20
     # start
     start = np.eye(3)  # origin
+    start[:-1, -1] = np.array([-length1 / 2, -length2 / 2])
     # straight 1
     move = _go_straight(start, length1, n1, delta_theta)
     # turn 1
@@ -110,8 +111,8 @@ def _turn(start: NDArray, angle: float, number: int, ratio: float = 1.0) -> NDAr
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
-    # result = rectangular_data(True)
-    result = circle_data(2., 100, 0., 2 * np.pi)
+    result = rectangular_data(True)
+    # result = circle_data(2., 100, 0., 2 * np.pi)
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.plot(result[:, 0, 2], result[:, 1, 2])
