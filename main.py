@@ -120,6 +120,7 @@ class StreamlitViewer:
 
         while True:
             self.animate()
+            time.sleep(0.01)
 
     def animate(self) -> None:
         global fig
@@ -164,41 +165,3 @@ class StreamlitViewer:
 if __name__ == '__main__':
     viewer = StreamlitViewer()
     viewer.run()
-
-
-
-# st_plot = st.pyplot(plt)
-
-# def animate(i):
-#     data = np.random.random((10, 2))
-#     map_scatter.set_offsets(data)
-#     # line.set_ydata(np.random.randint(0, 11, 10))
-#     # st.pyplot(fig)
-#     # st_plot.pyplot(fig)
-#     st_plot.pyplot(fig)
-
-# for i in range(100):
-#     print(i)
-#     animate(i)
-#     time.sleep(0.1)
-
-# max_x = 5
-# max_rand = 10
-
-# x = np.arange(0, max_x)
-# ax.set_ylim(0, max_rand)
-# line, = ax.plot(x, np.random.randint(0, max_rand, max_x))
-# the_plot = st.pyplot(plt)
-
-# def init():  # give a clean slate to start
-#     line.set_ydata([np.nan] * len(x))
-
-# def animate(i):  # update the y values (every 1000ms)
-#     line.set_ydata(np.random.randint(0, max_rand, max_x))
-#     the_plot.pyplot(plt)
-
-# init()
-
-# for i in range(100):
-#     animate(i)
-#     time.sleep(0.1)
